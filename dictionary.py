@@ -1,5 +1,3 @@
-#Add something that will number the definitions
-#Go through bug fix 1 and 2 on udemy
 import json
 from difflib import get_close_matches
 
@@ -9,16 +7,20 @@ def translate(w):
     w = word.lower()
     if w in data:
         return data[w]
+    elif w.title() in data:
+        return data[w.title()]
+    elif w.upper() in data:
+        return data[w.upper()]
     elif len(get_close_matches(w, data.keys())) > 0:
-        yn = input("Did you mean %s instead? Enter Y if yes, or N if no:  " %get_close_matches(word, data.keys())[0])
-        if yn == "Y":
-            return data[get_close_matches(w, data.keys())[0]]
-        elif yn == "N":
-            return "This is not in the dictionary"
-        else:
-            return "We didn't understand your query"
-    else:
-        return "This is not in the dictionary"
+            yn = input("Did you mean %s instead? Enter Y if yes, or N if no:  " %get_close_matches(word, data.keys())[0])
+            if yn == "Y" or yn == "y":
+                return data[get_close_matches(w, data.keys())[0]]
+            elif yn == "N" or yn == "n":
+                return "This is not in the dictionary"
+            else:
+                return "We didn't understand your query"
+
+
 
 word = input("Enter word: ")
 
@@ -29,5 +31,3 @@ if type(output) == list:
         print(item)
 else:
     print(output)
-
-#
